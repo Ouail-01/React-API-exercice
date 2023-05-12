@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUsers, selectUsers, selectIsLoading, selectError } from '../redux/users/usersSlice';
+import {
+  fetchUsers, selectUsers, selectIsLoading, selectError,
+} from '../redux/users/usersSlice';
 
 function UserList() {
   const dispatch = useDispatch();
@@ -17,13 +19,22 @@ function UserList() {
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return (
+      <p>
+        Error:
+        {error}
+      </p>
+    );
   }
 
   return (
     <ul>
       {users.map((user) => (
-        <li key={user.login.uuid}>{user.name.first} {user.name.last}</li>
+        <li key={user.login.uuid}>
+          {user.name.first}
+          {' '}
+          {user.name.last}
+        </li>
       ))}
     </ul>
   );

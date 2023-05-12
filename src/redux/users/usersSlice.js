@@ -6,7 +6,7 @@ export const fetchUsers = createAsyncThunk(
   async () => {
     const response = await axios.get('https://randomuser.me/api/?results=10');
     return response.data.results;
-  }
+  },
 );
 
 const usersSlice = createSlice({
@@ -14,23 +14,19 @@ const usersSlice = createSlice({
   initialState: {
     users: [],
     isLoading: false,
-    error: undefined
+    error: undefined,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsers.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.users = action.payload;
-      })
-      .addCase(fetchUsers.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      });
-  }
+      .addCase(fetchUsers.pending, (state) => ({ ...state, isLoading: true }))
+      .addCase(fetchUsers.fulfilled, (state, action) => ({
+        ...state, isLoading: false, users: action.payload,
+      }))
+      .addCase(fetchUsers.rejected, (state, action) => ({
+        ...state, isLoading: false, error: action.payload,
+      }));
+  },
 });
 
 export default usersSlice.reducer;
